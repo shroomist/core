@@ -5,14 +5,18 @@ export interface PluginDescriptor {
     pkg: any;
     defaults?: any;
     extends?: string;
-    register(container: IContainer, options?: any): Promise<any>;
+    register(container: IContainer, options?: PluginRegisterOptions): Promise<any>;
     deregister?(container: IContainer, options?: any): Promise<void>;
+}
+
+export interface PluginRegisterOptions {
+    [key: string]: string | number | object;
 }
 
 export interface PluginConfig<T> {
     name: string;
     version: string;
-    options: { [key: string]: any };
+    options: PluginRegisterOptions;
     plugin: T;
 }
 

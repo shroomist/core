@@ -9,6 +9,10 @@ export const plugin: Container.PluginDescriptor = {
     defaults,
     alias: "elasticsearch",
     async register(_, options) {
+        if (typeof options.client !== "object" || typeof options.chunkSize !== "number") {
+            throw new Error("Elasticsearch plugin config invalid");
+        }
+
         await client.setUp(options.client);
 
         await watchIndices(options.chunkSize);
